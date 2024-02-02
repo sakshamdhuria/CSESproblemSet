@@ -1,0 +1,40 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    int t;
+    cin >> t;
+    while(t--){
+        int x, y;
+        cin >> x >> y;
+        // Keep making moves until both piles are empty or no more moves can be made
+        while (x > 0 && y > 0) {
+            if (x > y) {
+                int diff=x-y;
+                x -= 2*(diff);
+                y -= 1*(diff);
+            }
+            else if (y > x) {
+                int diff=y-x;
+                x -= 1*(diff);
+                y -= 2*(diff);
+            }
+            else {
+                if(x%3==0){
+                    x=0;
+                    y=0;
+                }else{
+                    break;
+                }
+            }
+        }
+        if (x == 0 && y == 0) {
+            cout << "YES" << endl;
+        } else {
+            cout << "NO" << endl;
+        }
+    }
+    return 0;
+}
