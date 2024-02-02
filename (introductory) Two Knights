@@ -1,0 +1,21 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define int long long 
+const long long  mod =1e9+7;
+
+int32_t main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    int t;
+    cin >> t;
+
+    for(int i=1; i<=t; i++){
+        if(i==1){
+            cout<<0<<endl;
+        }else {
+            cout<<((i*i)*((i+3)*(i-3))+(24*i)-16)/2<<endl;
+        }
+    }
+    return 0;
+}
