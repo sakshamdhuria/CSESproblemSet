@@ -1,0 +1,24 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+#define int long long 
+const long long  mod =1e9+7;
+ 
+int32_t main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    int n;
+    cin>>n;
+    vector<int> dp(n+1, INT32_MAX);
+    dp[0]=0;
+    for(int i=1; i<=n; i++){
+        int curr=i;
+        while(curr>0){
+            int currDig=curr%10;
+            dp[i]=min(dp[i], dp[i-currDig]+1);
+            curr/=10;
+        }
+    }
+    cout<<dp[n];
+    return 0;
+}
