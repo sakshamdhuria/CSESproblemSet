@@ -1,0 +1,33 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define int long long 
+const long long  mod =1e9+7;
+int32_t main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    int k, n;
+    cin>>k>>n;
+    vector<int> vec(k);
+    for(int i=0; i<k; i++){
+        cin>>vec[i];
+    }
+    sort(vec.begin(), vec.end());
+    vector<int> dp(n+1, INT32_MAX);
+    dp[0]=0;
+    for(int i=1; i<=n; i++){
+        for(int j=0; j<k; j++){
+            if(vec[j]>i){
+                break;
+            }else{
+                dp[i]=min(dp[i], dp[i-vec[j]]+1);
+            }
+        }
+    }
+    if(dp[n]==INT32_MAX){
+        cout<<-1;
+    }else{
+        cout<<dp[n];
+    }
+    return 0;
+}
