@@ -1,0 +1,64 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define int long long 
+const long long  mod =1e9+7;
+
+
+int32_t main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    vector<int> alph(26, 0);
+    string s;
+    cin>>s;
+    int n= (int) s.size();
+    vector<char> ans(n);
+    for(int i=0; i<n; i++){
+        alph[s[i]-'A']++;
+    }
+
+    int oddCount =0; 
+    int oddIndex=-1;
+    for(int i=0; i<26; i++){
+        if(alph[i]%2!=0){
+            oddCount++;
+            oddIndex=i;
+        }
+    }
+
+    if(((int) s.size() )%2 !=0){
+        if(oddCount>1){
+            cout<<"NO SOLUTION"<<endl;
+            return 0;
+        }else{
+
+        }
+    }else if(oddCount>0){
+        cout<<"NO SOLUTION"<<endl;
+        return 0;
+    }
+    ans[(n/2)]=(oddIndex+'A');
+    alph[oddIndex]--;
+    int x=0; 
+    int y=n-1;
+    for(int i=0; i<26; i++){
+        for(int j=0; j<alph[i]; j++){
+            if(j%2==0){
+                ans[x]=(i+'A');
+                x++;
+            }else{
+                ans[y]=(i+'A');
+                y--;
+            }
+        }
+    }
+
+    for(int i=0; i<n; i++){
+        cout<<ans[i];
+    }
+
+    return 0;
+}
+
+
