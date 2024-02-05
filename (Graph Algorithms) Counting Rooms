@@ -1,0 +1,49 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define int long long 
+const long long  mod =1e9+7;
+
+vector<vector<bool> > vis;
+
+void dfs(int a, int b, int n, int m){
+    if(a<0 || a>n-1 || b<0 || b>m-1 || vis[a][b]){
+        return;
+    }
+    vis[a][b]=true;
+    dfs(a-1, b, n, m);
+    dfs(a+1, b, n, m);
+    dfs(a, b-1, n, m);
+    dfs(a, b+1, n, m);
+}
+int32_t main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    int n, m, ans=0;
+    cin>>n>>m;
+    vis.assign(n, vector<bool> (m, false));
+    vector< pair<int, int> > rooms;
+    for(int i=0; i<n; i++){
+        for(int j=0; j<m; j++){
+            char c;
+            cin>>c;
+            if(c=='.'){
+                rooms.push_back(make_pair(i, j));
+            }else{
+                vis[i][j]=true;
+            }
+        }
+    }
+    for(int i=0; i< (int) rooms.size(); i++){
+        int a=rooms[i].first;
+        int b=rooms[i].second;
+        if(!vis[a][b]){
+            ans++;
+            dfs(a, b, n, m);
+        }
+    }
+    cout<<ans<<endl;
+    return 0;
+}
+
+
