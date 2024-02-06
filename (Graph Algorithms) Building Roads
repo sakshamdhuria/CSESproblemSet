@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+//#define int long long 
+const long long  mod =1e9+7;
+vector<bool> vis;
+vector<int> diffNodes;
+vector<vector< int> > grph;
+
+void dfs(int i){
+    if(vis[i]){
+        return;
+    }
+    if(!vis[i]){
+        vis[i]=true;
+        for(int j=0; j<(int) grph[i].size(); j++){
+            dfs(grph[i][j]);
+        }
+    }
+}
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    int n, m;
+    cin>>n>>m;
+    grph.resize(n+1);
+    for(int i=0; i<m; i++){
+        int q, r;
+        cin>>q>>r;
+        grph[q].push_back(r);
+        grph[r].push_back(q);
+    }
+    
+
+    vis.resize(n+1);
+    for(int i=1; i<=n; i++){
+        if(!vis[i]){
+            diffNodes.push_back(i);
+        }
+        dfs(i);
+    }
+    cout<<(int) diffNodes.size() -1<<endl;
+    for(int i=1; i<(int) diffNodes.size(); i++){
+        cout<<diffNodes[0]<< " "<<diffNodes[i]<<endl;
+    }
+    return 0;
+}
