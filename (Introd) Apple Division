@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+#define int long long 
+const long long  mod =1e9+7;
+int32_t sum(vector<int> vec, int x){
+    int s=0;
+    for(int i=0; i<x; i++){
+        s+=vec[i];
+    }
+    return s;
+}
+int32_t main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    int n, su=0;
+    cin>>n;
+    vector<int> vec(n);
+    for(int i=0;i<n; i++){
+        int a;
+        cin>>a;
+        su+=a;
+        vec[i]=a;
+    }
+    sort(vec.begin(), vec.end());
+    int  ans=INT32_MAX;
+
+    for(int i=0; i<=(1<<n); i++){
+        int curr=0;
+        for(int j=0; j<n; j++){
+            if(i & (1<<j)){
+                curr+=vec[j];
+            }
+        }
+        ans=min(ans, abs(curr-(su-curr)));
+    }
+    cout<<ans;
+    return 0;
+}
