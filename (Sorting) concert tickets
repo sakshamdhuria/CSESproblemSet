@@ -1,0 +1,38 @@
+#include <iostream>
+#include <set>
+#include <vector>
+using namespace std;
+ 
+#define int long long
+ 
+int32_t main() {
+  int n, m;
+  cin >> n >> m;
+ 
+  multiset<int> vecN;
+  vector<int> vecM(m);
+ 
+  for(int i = 0; i < n; i++){
+    int price;
+    cin >> price;
+    vecN.insert(price);
+  }
+ 
+  for(int i = 0; i < m; i++){
+    cin >> vecM[i];
+  }
+ 
+  for(int i = 0; i < m; i++){
+    auto it = vecN.upper_bound(vecM[i]);
+ 
+    if(it == vecN.begin()){
+      cout << -1 << endl;
+    } else {
+      --it;
+      cout << *it << endl;
+      vecN.erase(it);
+    }
+  }
+ 
+  return 0;
+}
