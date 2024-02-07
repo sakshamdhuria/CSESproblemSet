@@ -1,0 +1,67 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+ 
+ #define int long long 
+const long long  mod =1e9+7;
+vector<bool> vis;
+vector<vector<int> > connections;
+vector<int> parents;
+
+void bfs(int i){
+    vis[i]=true;
+    queue<int> q;
+    
+    q.push(i);
+
+    parents[i]=-1;
+
+    while(!q.empty()){
+        int curr=q.front();
+        q.pop();
+
+        for(int j: connections[curr]){
+            if(!vis[j]){
+                q.push(j);
+                vis[j]=true;
+                parents[j]=curr;
+            }
+        }
+    }
+}
+int32_t main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    int n,m;
+    cin>>n>>m;
+    vis.resize(n+1, false);
+    connections.resize(n+1);
+    parents.resize(n+1);
+
+    for(int i=0; i<m; i++){
+        int a, b;
+        cin>>a>>b;
+        
+        connections[a].push_back(b);
+        connections[b].push_back(a);
+        
+    }
+    bfs(1);
+    if(!vis[n]){
+        cout<<"IMPOSSIBLE";
+    }else{
+        vector<int> ans;
+        int i=n; 
+        while(i!=1){
+            ans.push_back(i);
+            i=parents[i];
+        }
+        ans.push_back(i);
+        cout<<(int) ans.size()<<endl;
+        for(int x=(int) ans.size()-1; x>=0; x--){
+            cout<<ans[x]<<" ";
+        }
+    }
+
+    return 0;
+}
