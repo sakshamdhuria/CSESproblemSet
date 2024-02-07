@@ -1,0 +1,72 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+ 
+ #define int long long 
+const long long  mod =1e9+7;
+vector<bool> vis;
+vector<vector<int> > connections;
+vector<int> team;
+bool possible=true;
+ 
+void bfs(int i){
+    vis[i]=true;
+    queue<int> q;
+    
+    q.push(i);
+    team[i]=1;
+ 
+    while(!q.empty()){
+        int curr=q.front();
+        q.pop();
+ 
+        for(int j: connections[curr]){
+            if(!vis[j]){
+                q.push(j);
+                vis[j]=true;
+                if(team[curr]==1){
+                    team[j]=2;
+                }else{
+                    team[j]=1;
+                }
+            } else if(team[j]==team[curr]){
+                possible=false;
+                return;
+            }
+        }
+    }
+}
+int32_t main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    int n,m;
+    cin>>n>>m;
+    vis.resize(n+1, false);
+    connections.resize(n+1);
+    team.resize(n+1);
+ 
+    for(int i=0; i<m; i++){
+        int a, b;
+        cin>>a>>b;
+        
+        connections[a].push_back(b);
+        connections[b].push_back(a);
+        
+    }
+    
+    for(int i=1; i<=n; i++){
+        if(!vis[i]){
+            bfs(i);
+        }
+    }
+ 
+    if(possible){
+        for(int ind=1; ind<=n; ind++){
+            cout<< team[ind]<< " ";
+        }
+    }else{
+        cout<<"IMPOSSIBLE"<<endl;
+    }
+ 
+    return 0;
+}
