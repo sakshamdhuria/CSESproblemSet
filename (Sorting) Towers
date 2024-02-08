@@ -1,0 +1,27 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+ 
+ #define int long long 
+const long long  mod =1e9+7;
+
+int32_t main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    int n;
+    cin>>n; 
+    vector<int> currLowest;
+    for(int i=0; i<n; i++){
+        int curr;
+        cin>>curr;
+        auto it = upper_bound(currLowest.begin(), currLowest.end(), curr);
+        if(it==currLowest.end()){
+            currLowest.push_back(curr);
+        }else{
+            currLowest[it-currLowest.begin()]=curr;
+        }
+    }
+    cout<<(int) currLowest.size();
+    return 0;
+}
+
