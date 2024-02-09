@@ -1,0 +1,46 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+#define int long long
+const long long mod = 1e9 + 7;
+ 
+int32_t main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    int n, m;
+    cin>>n>>m;
+    vector<pair<int, int> > adjList[n+1];
+    vector<int> dist(n+1, LLONG_MAX);
+ 
+    for(int i=0; i<m; i++){
+        int a, b, d;
+        cin>>a>>b>>d;
+        adjList[a].push_back({b, d});
+    }
+ 
+    priority_queue<pair<int, int>, vector<pair<int, int> >, greater<> > q;
+    q.push({0, 1});
+    dist[1]=0;
+ 
+    while(!q.empty()){
+        int d=q.top().first;
+        int cN=q.top().second;
+        q.pop();
+ 
+        if(d>dist[cN]){
+            continue;
+        }
+ 
+        for(auto neighbor: adjList[cN]){
+            if(dist[neighbor.first]>d+neighbor.second){
+                dist[neighbor.first]=d+neighbor.second;
+                q.push({dist[neighbor.first], neighbor.first});
+            }
+        }
+    }
+    for(int i=1;i<=n;i++){
+        cout<<dist[i]<<" ";
+    }
+ 
+    return 0;
+}
