@@ -1,0 +1,42 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+#define int long long 
+const long long  mod =1e9+7;
+
+int32_t main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    int n, m, q;
+    cin>>n>>m>>q;
+    vector<vector<int> > vec(n+1, vector<int> (n+1, 1e14));
+    for(int i=0; i<m; i++){
+        int a, b, c;
+        cin>>a>>b>>c;
+        vec[a][b]=min(vec[a][b], c);
+        vec[b][a]=min(vec[b][a], c);
+    }
+    for(int i=1; i<=n; i++){
+        vec[i][i]=0;
+    }
+    for(int i=1; i<=n; i++){
+        for(int j=1; j<=n; j++){
+            for(int k=1; k<=n; k++){
+                vec[j][k]=min(vec[j][k], vec[j][i]+vec[i][k]);
+            }
+        }
+    }
+
+    for(int i=0; i<q; i++){
+        int a, b;
+        cin>>a>>b;
+        if(vec[a][b]>=1e14){
+            cout<<-1<<endl;
+        }else{
+            cout<<vec[a][b]<<endl;
+        }
+    }
+    
+    
+    return 0;
+}
