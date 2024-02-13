@@ -1,0 +1,48 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+#define int long long
+const long long mod = 1e9 + 7;
+ 
+ 
+int32_t main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    int n, x;
+    cin>>n>>x;
+    vector<pair<int, int> > vec(n);
+    bool found=false;
+    for(int i=1; i<=n; i++){
+        int a;
+        cin>>a;
+        vec[i-1]=make_pair(a, i);
+    }
+    sort(vec.begin(), vec.end());
+    int ans1, ans2, ans3;
+    for(int i=0; i<n; i++){
+        int l=i+1, r=n-1;
+        while(!found && l<r){
+            int vI=vec[i].first, vL=vec[l].first, vR=vec[r].first;
+            //cout<<i<<" " <<l<< " "<<r<<endl;
+            //cout<<vI<<" " <<vL<< " "<<vR<<endl;
+            if(vI+vL+vR<x){
+                l++;
+            }
+            if(vI+vL+vR>x){
+                r--;
+            }
+            if(vI+vL+vR==x){
+                found=true;
+                ans1=vec[i].second, ans2=vec[l].second, ans3=vec[r].second;
+                break;
+            }
+        }
+    }
+    if(found){
+        cout<<ans1 <<" " <<ans2 <<" "<<ans3 <<endl;
+    }else{
+        cout<<"IMPOSSIBLE"<<endl;
+    }
+    
+    return 0;
+}
