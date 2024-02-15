@@ -1,0 +1,61 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+//#define int long long 
+const long long  mod =1e9+7;
+vector<vector<int> > adjList;
+vector<bool> vis;
+vector<int> parents;
+int lastNode=1;
+
+void bfs(int node){
+    vis[node]=true;
+    queue<int> q;
+    q.push(node);
+
+    while(!q.empty()){
+        int curr=q.front();
+        q.pop();
+        for(int neighbor: adjList[curr]){
+            if(!vis[neighbor]){
+                vis[neighbor]=true;
+                q.push(neighbor);
+                parents[neighbor]=curr;
+                lastNode=neighbor;
+            }
+        }
+    }
+}
+
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    int n;
+    cin>>n;
+    adjList.resize(n+1);
+    vis.resize(n+1, false);
+    parents.resize(n+1, 0);
+    for(int i=1; i<n; i++){
+        int a, b;
+        cin>>a>>b;
+        adjList[a].push_back(b);
+        adjList[b].push_back(a);
+    }
+
+    bfs(1);
+    int lN=lastNode;
+    for(int i=0; i<=n; i++){
+        vis[i]=false;
+    }
+    bfs(lN);
+    int fN=lastNode;
+    int x=fN;
+    int ans=0;
+    while(x!=lN){
+        x=parents[x];
+        ans++;
+    }
+    cout<<ans<<endl;
+    return 0;
+}
