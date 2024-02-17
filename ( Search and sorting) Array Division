@@ -1,0 +1,45 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+#define int long long 
+const long long  mod =1e9+7;
+
+bool check(int k, int mid, vector<int>& vec){
+    int count = 1, sum = 0;
+    for (int x : vec) {
+        if (sum + x > mid) {
+            count++;
+            sum = x;
+        } else {
+            sum += x;
+        }
+    }
+    return count <= k;
+}
+
+int32_t main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    int n, sum=0, k, mx=0;
+    cin>>n>>k;
+    vector<int> vec(n);
+    for(int i=0; i<n; i++){
+        cin>>vec[i];
+        sum+=vec[i];
+        mx=max(vec[i], mx); 
+    }
+    int low=mx, high=sum;
+    int ans=high;
+    while(low<=high){
+        int mid=(low+high)/2;
+        if (check(k, mid, vec)) {
+            ans = mid;
+            high = mid - 1;
+        } else {
+            low = mid + 1;
+        }
+    }
+
+    cout<<ans<<endl;
+    return 0;
+}
