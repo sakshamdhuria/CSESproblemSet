@@ -1,0 +1,48 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+//#define int long long 
+const long long  mod =1e9+7;
+vector<vector< int> > adjList;
+vector<int> dist;
+int lastNode = 0;
+ 
+void bfs(int src){
+    queue<int> q;
+    q.push(src);
+    vector<int> d(dist.size()+1, -1);
+    d[src]=0;
+    dist[src]=max(d[src], dist[src]);
+ 
+    while (!q.empty()) {
+        lastNode = q.front();
+        q.pop();
+ 
+        for (int neighbor : adjList[lastNode]) {
+            if (d[neighbor]==-1) {
+                d[neighbor]=d[lastNode]+1;
+                dist[neighbor] = max(dist[neighbor], d[neighbor]);
+                q.push(neighbor);
+            }
+        }
+    }
+}
+int main(){
+    int n;
+    cin>>n;
+    adjList.resize(n+1);
+    dist.resize(n+1, -1);
+    for(int i=1; i<n; i++){
+        int a, b;
+        cin>>a>>b;
+        adjList[a].push_back(b);
+        adjList[b].push_back(a);
+    }
+    bfs(1);
+    bfs(lastNode);
+    bfs(lastNode);
+    for(int i=1; i<=n; i++){
+        cout<<dist[i]<<" ";
+    }
+    return 0;
+}
